@@ -1,0 +1,62 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  name: wf-exorcise-1
+spec:
+  entrypoint: dag-exorcise-1
+  templates:
+    - name: dag-exorcise-1
+      dag:
+        tasks:
+        - name: Task-1
+          template: script-template
+        - name: Task-2
+          template: container-template
+          dependencies: [Task-1]
+        - name: Task-3
+          template: resource-template
+          dependencies: [Task-1]
+        - name: Task-4
+          template: container-template
+          dependencies: [Task-2]
+        - name: Task-5
+          template: container-template
+          dependencies: [Task-4]
+        - name: Task-6
+          template: delay-template
+          dependencies: [Task-3, Task-5]
+        - name: Task-7
+          template: script-template
+          dependencies: [Task-6]
+
+    - name: script-template
+      script:
+        image: python:3.8-slim
+        command: [python]
+        source: |
+          print("Task A executed successfully with script template.")
+
+    - name: container-template
+      container:
+        image: python:3.8-slim
+        command: [python, -c, print("Task B executed successfully with container template.")]
+
+    - name: resource-template
+      resource:
+        action: create
+        manifest: |
+          apiVersion: argoproj.io/v1alpha1
+          kind: Workflow
+          metadata:
+            name: wf-exorcise-1-task-c
+          spec:
+            entrypoint: resource-template
+            templates:
+              - name: resource-template
+                container:
+                  image: python:3.8-slim
+                  command: [python, -c, print("Task C executed successfully with container template.")]
+
+    - name: delay-template
+      suspend:
+        duration: "5s"
