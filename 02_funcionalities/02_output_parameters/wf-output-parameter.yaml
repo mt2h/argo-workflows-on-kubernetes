@@ -4,6 +4,7 @@ metadata:
   name: wf-output-parameter
 spec:
   entrypoint: dag-template
+  #set content input parameters for used in dag tasks
   arguments:
     parameters:
     - name: message1
@@ -12,6 +13,7 @@ spec:
       value: Task 2 is executed
   templates:
   - name: dag-template
+    #set names input parameters for used in dag tasks
     inputs:
       parameters:
       - name: message1
@@ -20,6 +22,7 @@ spec:
       tasks:
       - name: Task1
         arguments:
+          #set parameters for used into script
           parameters: [{name: text, value: "{{inputs.parameters.message1}}"}]
         template: task-template
       - name: Task2
@@ -43,6 +46,7 @@ spec:
     script:
       image: python:3.8-slim
       command: [python]
+      #read parameter seted in call task in dag tasks
       source: |
         p = "{{inputs.parameters.text}}"
         print(p)

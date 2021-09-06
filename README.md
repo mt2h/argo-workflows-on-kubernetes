@@ -28,6 +28,7 @@ kubectl -n argo edit cm workflow-controller-configmap #change options
 ```
 
 ## Argo CLI
+
 ```bash
 #https://github.com/argoproj/argo-workflows/releases
 wget https://github.com/argoproj/argo-workflows/releases/download/v3.1.9/argo-linux-amd64.gz
@@ -42,4 +43,12 @@ argo -n argo delete wf-input-parameter-dag
 argo -n argo list
 argo -n argo submit wf-input-parameter-dag.yaml -p message1="Parameter used from terminal"
 argo -n argo submit wf-input-parameter-dag.yaml --parameter-file parameters.yaml
+```
+
+## Secrets
+
+```bash
+kubectl -n argo create secret generic test-secret --from-file=test-password=test_password_file.txt
+kubectl -n argo get secret test-secret
+kubectl -n argo describe secret test-secret
 ```

@@ -33,7 +33,7 @@ spec:
       - name: Task4
         dependencies: [Task2, Task3]
         arguments:
-          #step 3 - add content artifact created in task 1 and readed from path param here
+          #step 3 - add content artifact created in Task3 and readed from path param here
           artifacts: [{name: text, from: "{{tasks.Task3.outputs.artifacts.artifact-out}}" }]
         template: task-input-artifact
 
