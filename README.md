@@ -52,3 +52,7 @@ kubectl -n argo create secret generic test-secret --from-file=test-password=test
 kubectl -n argo get secret test-secret
 kubectl -n argo describe secret test-secret
 ```
+
+## Board
+
+![Board](./img/board.jpeg)
