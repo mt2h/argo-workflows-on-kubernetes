@@ -1,23 +1,18 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:
-  name: wf-condition
+  generateName: wf-retrystrategy-
 spec:
   entrypoint: dag-template
   arguments:
     parameters:
     - name: messageA
       value: A
-    - name: messageB
-      value: B
-
   templates:
   - name: dag-template
     inputs:
       parameters:
       - name: messageA
-      - name: messageB
-
     dag:
       tasks:
       - name: Task1
@@ -26,25 +21,10 @@ spec:
         template: task-decision
       - name: TaskA
         template: task-A
-        dependencies: [Task1]
+        depends: Task1.Succeeded
         when: "{{tasks.Task1.outputs.result}} == A"
-      - name: TaskB
-        template: task-B
-        dependencies: [Task1]
-        when: "{{tasks.Task1.outputs.result}} == B"
-      - name: Task2
-        arguments:
-          parameters: [{name: text, value: "{{inputs.parameters.messageB}}" }]
-        template: task-decision
-      - name: TaskA2
-        template: task-A
-        dependencies: [Task2]
-        when: "{{tasks.Task2.outputs.result}} == A"
-      - name: TaskB2
-        template: task-B
-        dependencies: [Task2]
-        when: "{{tasks.Task2.outputs.result}} == B"
-    
+
+
   - name: task-decision
     inputs:
       parameters:
@@ -57,15 +37,16 @@ spec:
         print(p)
 
   - name: task-A
+    retryStrategy:
+      limit: 10
+      retryPolicy: "Always"
+      backoff:
+        duration: "1"
+        factor: 2
+        maxDuration: "1m"
     script:
       image: python:3.8-slim
       command: [python]
+      #bellow will be generate beause there isn't last " en print funcition of Python
       source: |
-        print("Task A was executed.")
-
-  - name: task-B
-    script:
-      image: python:3.8-slim
-      command: [python]
-      source: |
-        print("Task B was executed.")
+        print("Task A was executed.)
