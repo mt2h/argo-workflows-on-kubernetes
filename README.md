@@ -53,6 +53,17 @@ kubectl -n argo get secret test-secret
 kubectl -n argo describe secret test-secret
 ```
 
+## Templates
+
+```bash
+argo -n argo template create wftmpl-dag.yaml
+argo -n argo template list
+argo -n argo submit --from workflowtemplate/wftmpl-dag
+argo -n argo list
+argo -n argo template delete wftmpl-dag
+argo -n argo template get wftmpl-dag -o yaml
+```
+
 ## Exorcises
 
 ### Exorcise, 2 comamnds
