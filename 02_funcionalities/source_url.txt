@@ -1,0 +1,2 @@
+https://udemy-sources-bucket-mt2h.s3.us-east-2.amazonaws.com/emails.csv
+

@@ -53,6 +53,21 @@ kubectl -n argo get secret test-secret
 kubectl -n argo describe secret test-secret
 ```
 
+## Exorcises
+
+### Exorcise, 2 comamnds
+
+```bash
+echo https://udemy-sources-bucket-mt2h.s3.us-east-2.amazonaws.com/emails.csv > source_url.txt
+echo email@gmail.com > notitication_email.txt
+kubectl -n argo create secret generic exorcise-2-secret --from-file=source_url=source_url.txt --from-file=notitication_email=notitication_email.txt
+kubectl get secret -n argo
+kubectl describe secret exorcise-2-secret -n argo
+argo -n argo submit wf-exorcise-2.yaml --dry-run -o yaml
+argo -n argo submit wf-exorcise-2.yaml
+kubectl describe wf wf-exorcise2 -n argo
+```
+
 ## Board
 
 ![Board](./img/board.jpeg)
