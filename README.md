@@ -73,6 +73,16 @@ argo -n argo submit --from cronwf/cronwf-dag
 argo -n argo cron suspend cronwf-dag
 argo -n argo cron resume cronwf-dag
 ```
+## Cluster Template
+
+```bash
+argo -n argo cluster-template create clusterwftmpl-dag.yaml
+argo -n argo template create wftmpl-dag.yaml
+argo -n argo cluster-template list
+argo cluster-template list
+argo -n argo template list
+argo template list #there are anything
+```
 
 ## Exorcises
 
