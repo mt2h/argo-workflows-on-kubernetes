@@ -83,6 +83,12 @@ argo cluster-template list
 argo -n argo template list
 argo template list #there are anything
 ```
+## Reference to Workflow Template
+
+```bash
+argo -n argo template create wftmpl-dag.yaml
+argo -n argo cron create cronwf.yaml
+```
 
 ## Exorcises
 
