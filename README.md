@@ -64,6 +64,16 @@ argo -n argo template delete wftmpl-dag
 argo -n argo template get wftmpl-dag -o yaml
 ```
 
+## Crons
+
+```bash
+argo -n argo cron create cronwf-dag.yaml
+argo -n argo cron list
+argo -n argo submit --from cronwf/cronwf-dag
+argo -n argo cron suspend cronwf-dag
+argo -n argo cron resume cronwf-dag
+```
+
 ## Exorcises
 
 ### Exorcise, 2 comamnds
