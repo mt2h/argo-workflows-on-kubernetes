@@ -90,6 +90,23 @@ argo -n argo template create wftmpl-dag.yaml
 argo -n argo cron create cronwf.yaml
 ```
 
+## AWS S3
+
+```bash
+echo $AWS_ACCESS_KEY_ID > aws_access_key_id.txt
+echo $AWS_SECRET_ACCESS_KEY > aws_secret_access_key.txt
+kubectl -n argo create secret generic aws-credentials-test \
+  --from-file=access_key_id=aws_access_key_id.txt \
+  --from-file=secret_access_key=aws_secret_access_key.txt
+kubectl -n argo get secret aws-credentials-test
+kubectl -n argo describe secret aws-credentials-test
+aws s3 mb s3://argo-course-bucket-mt2h --region us-east-2
+argo -n argo submit wf-artifact-s3.yaml
+
+kubectl -n argo edit configmap workflow-controller-configmap
+#in this configmap adding secrets and configuration the S3 AWS created previously
+```
+
 ## Exorcises
 
 ### Exorcise, 2 comamnds
@@ -97,7 +114,9 @@ argo -n argo cron create cronwf.yaml
 ```bash
 echo https://udemy-sources-bucket-mt2h.s3.us-east-2.amazonaws.com/emails.csv > source_url.txt
 echo email@gmail.com > notitication_email.txt
-kubectl -n argo create secret generic exorcise-2-secret --from-file=source_url=source_url.txt --from-file=notitication_email=notitication_email.txt
+kubectl -n argo create secret generic exorcise-2-secret \
+  --from-file=source_url=source_url.txt \
+  --from-file=notitication_email=notitication_email.txt
 kubectl get secret -n argo
 kubectl describe secret exorcise-2-secret -n argo
 argo -n argo submit wf-exorcise-2.yaml --dry-run -o yaml
