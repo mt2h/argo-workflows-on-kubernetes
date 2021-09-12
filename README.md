@@ -107,6 +107,14 @@ kubectl -n argo edit configmap workflow-controller-configmap
 #in this configmap adding secrets and configuration the S3 AWS created previously
 ```
 
+## Archived Workflow
+
+```bash
+kubectl -n argo port-forward deployment/postgres 30401:5432
+kubectl -n argo edit configmap workflow-controller-configmap
+#in this configmaps can be edit options for database postgres about worflow archived
+```
+
 ## Exorcises
 
 ### Exorcise, 2 comamnds
