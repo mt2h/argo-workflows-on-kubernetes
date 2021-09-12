@@ -20,7 +20,7 @@ kubectl get workflow -n argo
 ## Artifacts Logs Workflow
 
 ```bash
-kubectl -n argo port-forward pod/minio-77d6796f8d-lrcnf 9000:9000
+kubectl -n argo port-forward pod/minio-77d6796f8d-8mr7s 9000:9000
 http://localhost:9000/ #admin, password
 kubectl get cm -n argo
 kubectl describe cm workflow-controller-configmap -n argo
