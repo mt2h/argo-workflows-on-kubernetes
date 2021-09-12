@@ -76,6 +76,7 @@ argo -n argo cron resume cronwf-dag
 ## Cluster Template
 
 ```bash
+#Cluster Workflow Template can be used in all namespaces of Kubernetes
 argo -n argo cluster-template create clusterwftmpl-dag.yaml
 argo -n argo template create wftmpl-dag.yaml
 argo -n argo cluster-template list
@@ -130,6 +131,13 @@ kubectl describe secret exorcise-2-secret -n argo
 argo -n argo submit wf-exorcise-2.yaml --dry-run -o yaml
 argo -n argo submit wf-exorcise-2.yaml
 kubectl describe wf wf-exorcise2 -n argo
+```
+
+### Exorcise, 3 comamnds
+
+```bash
+argo template create wftmpl-exercise2.yaml
+argo cron create cronwf-master.yaml
 ```
 
 ## Board

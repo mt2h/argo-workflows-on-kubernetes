@@ -9,7 +9,7 @@ spec:
     - name: message1
       value: Task 1 is executed
     - name: message2
-      value: Task 2 is executed   
+      value: Task 2 is executed
   templates:
   - name: dag-template
     inputs:
@@ -35,7 +35,7 @@ spec:
         arguments:
           artifacts: [{name: text, from: "{{tasks.Task3.outputs.artifacts.artifact-out}}" }]
         template: task-input-artifact
-        
+
   - name: task-template
     inputs:
       parameters:
@@ -46,7 +46,7 @@ spec:
       source: |
         p = "{{inputs.parameters.text}}"
         print(p)
-        
+
   - name: task-output-artifact
     script:
       image: node:9.1-alpine
@@ -59,7 +59,7 @@ spec:
       artifacts:
       - name: artifact-out
         path: /tmp/output-params.txt
-  
+
   - name: task-input-artifact
     inputs:
       artifacts:

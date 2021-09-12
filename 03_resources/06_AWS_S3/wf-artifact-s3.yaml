@@ -56,7 +56,7 @@ spec:
         path: /tmp/output-params.txt
         s3:
           endpoint: s3.amazonaws.com
-          bucket: argo-course-bucket-test
+          bucket: argo-course-mt2h
           key: output-params.tgz
           accessKeySecret:
             name: aws-credentials-test
